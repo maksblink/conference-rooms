@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of the rooms</title>
+</head>
+<body>
+{{ errors }}
+    <table>
+        <th colspan="7">
+            List of the rooms
+        </th>
+        <tr>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>dostepnosc sali</th>
+            <th>Projector available</th>
+            <th>Edit buttons</th>
+            <th>Delete buttons</th>
+            <th>Booking buttons</th>
+        </tr>
+        {% for room in rooms %}
+            <tr>
+                <td><a href="/room/{id}/">{{ room.name }}</a></td>
+                <td>{{ room.capacity }}</td>
+                <td>Dostepnosc sali</td>
+                <td>{{ room.projector_available }}</td>
+                <td><a href="/room/modify/{id}/">Edit</a></td>
+                <td><a href="/room/delete/{id}">Delete</a></td>
+                <td><a href="/room/reserve/{id}">Book</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <style>
+        h1 { text-align: center; margin-top: 50px; }
+        a { text-decoration:none; color: inherit; }
+        a:hover { color: blue; }
+        table { width: 1000px; margin: 30px auto 20px auto; border-collapse: collapse; }
+        table th { background: lightgray; }
+        table td, table th { border: 1px solid black; text-align: center; height: 25px; }
+    </style>
+</body>
+</html>

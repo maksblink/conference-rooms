@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from main_app.views import AddRoom
+from main_app.views import HomePage, AddRoom, ShowRooms, DeleteRoom, EditRoom
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^room/new/?$', AddRoom.as_view()),
+    re_path(r'^home/?$', HomePage.as_view()),
+    re_path(r'^room/new/?$', AddRoom.as_view(), name="add_room"),
+    re_path(r'^room/?$', ShowRooms.as_view(), name="show_room"),
+    re_path(r'^room/delete/(?P<id_room>\d+)/?$', DeleteRoom.as_view(), name="delete_room"),
+    re_path(r'^room/modify/(?P<id_room>\d+)/?$', EditRoom.as_view(), name="edit_room"),
 ]

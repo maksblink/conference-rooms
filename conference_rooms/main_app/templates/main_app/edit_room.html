@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new room</title>
+</head>
+<body>
+{{ errors }}
+    <form name="editing_room" action="" method="POST">
+        <label>
+            Name of the room
+            <input name="room_name" type="text"><br>
+            Capacity of the room
+            <input name="room_capacity" type="number"><br>
+            Is there a projector:<br>
+            <select name="projector_room">
+                <option value="t">true</option>
+                <option value="f">false</option>
+            </select><br><br>
+            <input type="submit" value="Edit this room">
+        </label>
+        {% csrf_token %}
+    </form>
+</body>
+</html>
