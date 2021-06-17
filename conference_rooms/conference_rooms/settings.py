@@ -76,10 +76,8 @@ WSGI_APPLICATION = 'conference_rooms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # <- usunac?
-        'NAME': BASE_DIR / 'db.sqlite3', # <- usunac?
         'HOST': '127.0.0.1',
-        'NAME': 'conferance_rooms',
+        'NAME': 'conference_rooms',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'USER': 'postgres',
         'PASSWORD': 'coderslab',
