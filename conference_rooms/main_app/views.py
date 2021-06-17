@@ -2,8 +2,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
-from main_app.models import Room
+from main_app.models import Room, Reservation
+from datetime import date, datetime
 
 
 class HomePage(View):
@@ -90,4 +92,21 @@ class EditRoom(View):
         except ObjectDoesNotExist:
             return render(request, 'main_app/edit_room.html',
                           context={'errors': "This room is not exists!"})
-        return HttpResponseRedirect('http://127.0.0.1:8000/room')
+        return HttpResponseRedirect(reverse('show_rooms'))
+
+
+class BookTheRoom(View):
+    def get(self, request, id_room):
+        return render(request, 'main_app/book_the_room.html')
+
+    def post(self, request, id_room):
+        comment = request.POST.get('comment')
+        date = request.POST.get('book_date')
+        date = datetime.strptime(date, '%Y-%m-%d')
+        try:
+            test_get = Reservation.objects.get(date=date, room_id=id_room)
+            return render(request, 'main_app/book_the_room.html',
+                          context={'errors': "This room is already booked on this date!"})
+        except ObjectDoesNotExist:
+            if date < datetime.now():
+                print("xxxxxx")

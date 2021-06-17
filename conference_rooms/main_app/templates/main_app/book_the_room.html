@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new room</title>
+</head>
+<body>
+{{ errors }}
+    <form name="book_the_room" action="" method="POST">
+        <label>
+            Comment to the reservation
+            <input name="comment" type="text"><br>
+            Date
+            <input name="book_date" type="date"><br>
+            <input type="submit" value="Add new reservation">
+        </label>
+        {% csrf_token %}
+    </form>
+</body>
+</html>
