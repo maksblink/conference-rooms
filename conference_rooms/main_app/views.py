@@ -1,11 +1,13 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
+
 from main_app.models import Room, Reservation
-from datetime import date, datetime
 
 
 class HomePage(View):
@@ -60,7 +62,7 @@ class DeleteRoom(View):
 class EditRoom(View):
     def get(self, request, id_room):
         try:
-            room = Room.objects.get(id=id_room)
+            test_get = Room.objects.get(id=id_room)
         except ObjectDoesNotExist:
             return render(request, 'main_app/edit_room.html',
                           context={'errors': "This room is not exists!"})
@@ -97,16 +99,37 @@ class EditRoom(View):
 
 class BookTheRoom(View):
     def get(self, request, id_room):
+        try:
+            test_get = Room.objects.get(id=id_room)
+        except ObjectDoesNotExist:
+            return render(request, 'main_app/book_the_room.html',
+                          context={'errors': "This room is not exists!"})
         return render(request, 'main_app/book_the_room.html')
 
     def post(self, request, id_room):
         comment = request.POST.get('comment')
-        date = request.POST.get('book_date')
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date_of_r = request.POST.get('book_date')
+        date_of_r = datetime.strptime(date_of_r, '%Y-%m-%d')
         try:
-            test_get = Reservation.objects.get(date=date, room_id=id_room)
+            test_get = Reservation.objects.get(date=date_of_r, room_id=id_room)
             return render(request, 'main_app/book_the_room.html',
                           context={'errors': "This room is already booked on this date!"})
         except ObjectDoesNotExist:
-            if date < datetime.now():
-                print("xxxxxx")
+            if date_of_r > datetime.now():
+                new_reservation = Reservation.objects.create(date=date_of_r, comment=comment, room_id=id_room)
+                return HttpResponseRedirect(reverse('show_rooms'))
+            else:
+                return render(request, 'main_app/book_the_room.html',
+                              context={'errors': "You can not book the room for a past date!"})
+
+
+class RoomDetails(View):
+    def get(self, request, id_room):
+        try:
+            room = Room.objects.get(id=id_room)
+            reservations = Reservation.objects.filter(room_id__id=id_room)  # <----- How does it work!
+            reservations = Reservation.objects.order_by('-date')  # <---------- And how to connect these two conditions?
+            return render(request, 'main_app/room_details.html',
+                          context={'room': room, 'reservations': reservations})
+        except ObjectDoesNotExist:
+            return HttpResponse("This room is not exists!")

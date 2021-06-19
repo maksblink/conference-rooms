@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details of the room</title>
+</head>
+<body>
+{{ errors }}
+    <table>
+        <th colspan="2">
+            Details of the room
+        </th>
+        <tr>
+            <th>Name</th>
+            <td>{{ room.name }}</td>
+        </tr>
+        <tr>
+            <th>Capacity</th>
+            <td>{{ room.capacity }}</td>
+        </tr>
+        <tr>
+            <th>dostepnosc sali</th>
+            <td>Dostepnosc sali</td>
+        </tr>
+        <tr>
+            <th>Projector available</th>
+            <td>{{ room.projector_available }}</td>
+        </tr>
+        <th colspan="2">
+            Past reservation of this room
+        </th>
+        <tr>
+            <th>Date</th>
+            <th>Comment</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+            <th>{{ reservation.date }}</th>
+            <td>{{ reservation.comment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3><a href={% url 'edit_room' room.id %}>Edit the room</a></h3>
+    <h3><a href={% url 'delete_room' room.id %}>Delete the room</a></h3>
+    <h3><a href={% url 'book_room' room.id %}>Book the room</a></h3>
+    <style>
+        h3 { text-align: center; margin-top: 50px; }
+        a { text-decoration:none; color: inherit; }
+        a:hover { color: blue; }
+        table { width: 650px; margin: 30px auto 20px auto; border-collapse: collapse; }
+        table th { background: lightgray; }
+        table td, table th { border: 1px solid black; text-align: center; height: 30px; }
+    </style>
+</body>
+</html>
