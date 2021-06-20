@@ -44,7 +44,7 @@ class AddRoom(View):
 class ShowRooms(View):
     def get(self, request):
         rooms = Room.objects.all()
-        if not rooms.first():  # empty?
+        if not rooms.first():
             return HttpResponse("No rooms available ")
         today = datetime.date.today()
         today_room_reservation = []
@@ -114,7 +114,8 @@ class BookTheRoom(View):
         except ObjectDoesNotExist:
             return render(request, 'main_app/book_the_room.html',
                           context={'errors': "This room is not exists!"})
-        return render(request, 'main_app/book_the_room.html')
+        reservations = test_get.reservation_set.all()
+        return render(request, 'main_app/book_the_room.html', context={'reservations': reservations})
 
     def post(self, request, id_room):
         comment = request.POST.get('comment')

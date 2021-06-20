@@ -8,13 +8,36 @@
 {{ errors }}
     <form name="book_the_room" action="" method="POST">
         <label>
-            Comment to the reservation
-            <input name="comment" type="text"><br>
-            Date
-            <input name="book_date" type="date"><br>
+            <h2>Comment to the reservation</h2>
+            <input name="comment" type="text">
+            <h2>Date</h2>
+            <input name="book_date" type="date"><br><br>
             <input type="submit" value="Add new reservation">
         </label>
         {% csrf_token %}
     </form>
+    <table>
+        <tr>
+            <th colspan="2">Past reservations of this room</th>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <th>Comment</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.comment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+<style>
+    h1 { text-align: center; margin-top: 10px; }
+    table { width: 525px; margin: 70px auto 20px auto; border-collapse: collapse; }
+    table th { background: lightgray; }
+    table td, table th { border: 1px solid black; text-align: center; height: 65px; width: 1000px}
+    form {width: 500px}
+    input {width: 1000px; height: 50px; font-size: 30px}
+</style>
 </body>
 </html>
