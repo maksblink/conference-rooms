@@ -13,31 +13,31 @@
         <tr>
             <th>Name</th>
             <th>Capacity</th>
-            <th>dostepnosc sali</th>
+            <th>Room availability for today</th>
             <th>Projector available</th>
             <th>Edit buttons</th>
             <th>Delete buttons</th>
             <th>Booking buttons</th>
         </tr>
-        {% for room in rooms %}
+        {% for room, avalable in today_room_reservation %}
             <tr>
-                <td><a href="/room/{id}/">{{ room.name }}</a></td>
+                <td><a href="{% url 'room_details' room.id %}">{{ room.name }}</a></td>
                 <td>{{ room.capacity }}</td>
-                <td>Dostepnosc sali</td>
+                <td>{{ avalable }}</td>
                 <td>{{ room.projector_available }}</td>
-                <td><a href="/room/modify/{id}/">Edit</a></td>
-                <td><a href="/room/delete/{id}">Delete</a></td>
-                <td><a href="/room/reserve/{id}">Book</a></td>
+                <td><a href="{% url 'edit_room' room.id %}">Edit</a></td>
+                <td><a href="{% url 'delete_room' room.id %}">Delete</a></td>
+                <td><a href="{% url 'book_room' room.id %}">Book</a></td>
             </tr>
         {% endfor %}
     </table>
     <style>
-        h1 { text-align: center; margin-top: 50px; }
+        h1 { text-align: center; margin-top: 10px; }
         a { text-decoration:none; color: inherit; }
         a:hover { color: blue; }
-        table { width: 1000px; margin: 30px auto 20px auto; border-collapse: collapse; }
+        table { width: 1250px; margin: 70px auto 20px auto; border-collapse: collapse; }
         table th { background: lightgray; }
-        table td, table th { border: 1px solid black; text-align: center; height: 25px; }
+        table td, table th { border: 1px solid black; text-align: center; height: 65px; width: 1000px}
     </style>
 </body>
 </html>
