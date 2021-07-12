@@ -72,11 +72,11 @@ class DeleteRoom(View):
 class EditRoom(View):
     def get(self, request, id_room):
         try:
-            test_get = Room.objects.get(id=id_room)
+            room = Room.objects.get(id=id_room)
         except ObjectDoesNotExist:
             return render(request, 'main_app/edit_room.html',
                           context={'errors': "This room is not exists!"})
-        return render(request, 'main_app/edit_room.html')
+        return render(request, 'main_app/edit_room.html', context={'room': room})
 
     def post(self, request, id_room):
         name = request.POST.get('room_name')

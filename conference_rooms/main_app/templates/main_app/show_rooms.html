@@ -19,11 +19,11 @@
             <th>Delete buttons</th>
             <th>Booking buttons</th>
         </tr>
-        {% for room, avalable in today_room_reservation %}
+        {% for room, available in today_room_reservation %}
             <tr>
                 <td><a href="{% url 'room_details' room.id %}">{{ room.name }}</a></td>
                 <td>{{ room.capacity }}</td>
-                <td>{{ avalable }}</td>
+                <td>{{ available }}</td>
                 <td>{{ room.projector_available }}</td>
                 <td><a href="{% url 'edit_room' room.id %}">Edit</a></td>
                 <td><a href="{% url 'delete_room' room.id %}">Delete</a></td>

@@ -9,13 +9,18 @@
     <form name="editing_room" action="" method="POST">
         <label>
             <h2>Name of the room</h2>
-            <input name="room_name" type="text"><br>
+            <input name="room_name" type="text" placeholder="{{ room.id }}"><br>
             <h2>Capacity of the room</h2>
-            <input name="room_capacity" type="number"><br>
+            <input name="room_capacity" type="number" placeholder="{{ room.capacity }}"><br>
             <h2>Is there a projector:<br></h2>
             <select name="projector_room">
-                <option value="t">true</option>
-                <option value="f">false</option>
+                {% if room.projector_available == True %}
+                    <option value="t" selected disabled hidden>true</option>
+                    <option value="f">false</option>
+                {% else %}
+                    <option value="t">true</option>
+                    <option value="f" selected disabled hidden>false</option>
+                {% endif %}
             </select><br><br>
             <input type="submit" value="Edit this room">
         </label>
