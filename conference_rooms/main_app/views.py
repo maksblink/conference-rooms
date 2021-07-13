@@ -144,7 +144,7 @@ class RoomDetails(View):
                 if r.date == today:
                     available = False
                     break
-            reservations = Reservation.objects.filter(room_id=id_room).order_by('-date')  # <----- How does it work!
+            reservations = Reservation.objects.filter(room_id=id_room).order_by('-date')
             return render(request, 'main_app/room_details.html',
                           context={'room': room, 'reservations': reservations, 'available': available})
         except ObjectDoesNotExist:
