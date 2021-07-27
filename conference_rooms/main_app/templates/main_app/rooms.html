@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search for the room</title>
+</head>
+<body>
+
+<table>
+    <th colspan="7">
+        List of the rooms
+    </th>
+    <tr>
+        <th>Name</th>
+        <th>Capacity</th>
+        <th>Projector available</th>
+        <th>Edit buttons</th>
+        <th>Delete buttons</th>
+        <th>Booking buttons</th>
+    </tr>
+    {% for room in rooms %}
+    <tr>
+        <td><a href="{% url 'room_details' room.id %}">{{ room.name }}</a></td>
+        <td>{{ room.capacity }}</td>
+        <td>{{ room.projector_available }}</td>
+        <td><a href="{% url 'edit_room' room.id %}">Edit</a></td>
+        <td><a href="{% url 'delete_room' room.id %}">Delete</a></td>
+        <td><a href="{% url 'book_room' room.id %}">Book</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Search for the room</h2>
+<div>
+    <form action="" method="GET">
+        {% csrf_token %}
+        <div>
+            <h3>Name of the room</h3>
+            <input type="text" id="room-name" name="room-name">
+        </div>
+        <div>
+            <h3>Minimum room capacity</h3>
+            <input type="number" step="1" id="capacity" name="capacity">
+        </div>
+        <div>
+            <h3>Projector availability<input class="smaller" type="checkbox" name="projector" id="projector"></h3>
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<style>
+    h1 { text-align: center; margin-top: 1px; }
+    h2 { text-align: center; margin-top: 1px; }
+    h3 { text-align: center; margin-top: 1px; }
+    a { text-decoration:none; color: inherit; }
+    a:hover { color: blue; }
+    table { width: 1250px; margin: 70px auto 20px auto; border-collapse: collapse; }
+    table th { background: lightgray; }
+    table td, table th { border: 1px solid black; text-align: center; height: 65px; width: 1000px}
+    form {width: 1000px; text-align: center; margin: 0 auto}
+    input {width: 1000px; height: 40px; font-size: 30px}
+    button {width: 850px; height: 50px; font-size: 22px}
+    .smaller {height: 20px}
+</style>
+
+</body>
+</html>

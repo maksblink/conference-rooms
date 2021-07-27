@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-
 from main_app.models import Room, Reservation
 
 
@@ -149,3 +148,19 @@ class RoomDetails(View):
                           context={'room': room, 'reservations': reservations, 'available': available})
         except ObjectDoesNotExist:
             return HttpResponse("This room is not exists!")
+
+
+class SearchView(View):
+    def get(self, request):
+        name = request.GET.get("room-name")
+        capacity = request.GET.get("capacity")
+        capacity = int(capacity) if capacity else 0
+        projector = request.GET.get("projector") == "on"
+        rooms = Room.objects.all()
+        if projector:
+            rooms = rooms.filter(projector_available=projector)
+        if capacity:
+            rooms = rooms.filter(capacity__gte=capacity)
+        if name:
+            rooms = rooms.filter(name__icontains=name)
+        return render(request, "main_app/rooms.html", context={"rooms": rooms})
